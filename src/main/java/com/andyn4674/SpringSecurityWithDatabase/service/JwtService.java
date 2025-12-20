@@ -1,6 +1,5 @@
 package com.andyn4674.SpringSecurityWithDatabase.service;
 
-import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Date;
@@ -11,20 +10,18 @@ import java.util.function.Function;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
+@Service
 public class JwtService {
     
     private String secretKey;
-
-    @Autowired
-    private UserDetails userDetails;
 
     public JwtService()
     {
@@ -75,7 +72,7 @@ public class JwtService {
             .getPayload();
     }
 
-    public boolean validateToken(String token, UserDetails userdetails) {
+    public boolean validateToken(String token, UserDetails userDetails) {
         final String userName = extractUserName(token);
         return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
